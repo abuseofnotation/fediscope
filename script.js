@@ -45,7 +45,7 @@ const Servers = ({ userName, state, setState }) => {
     ]),
 
     ServerList({
-      state: state.favourites,
+      state: state.favourites || {},
       setState: (favourites) => setState({ favourites }),
       userName,
     }),

@@ -75,7 +75,7 @@ export const ServerList = ({
 
 const ServerPreview = ({ name, userName, remove }) => {
   const container = div({ className: "serverPosts" }, [
-    div({ className: "Loading", text: "Loading" }),
+    div({ className: "loading", text: "Loading" }),
   ]);
 
   get(
@@ -90,7 +90,12 @@ const ServerPreview = ({ name, userName, remove }) => {
     container.replaceChildren(
       ...resultSorted.map((post) => Post({ post, userName, name })),
     );
+  })
+  .catch((error) => {
+    console.log(error)
+    container.replaceChildren(div({text:error}))
   });
+
   return div({ className: "serverPreview" }, [
     div({ className: "header" }, [
       span({ text: name }),

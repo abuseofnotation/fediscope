@@ -134,3 +134,7 @@ input {
   width: 22px;
   margin: 0px 2px -4px 0px;
 }
+.loading {
+  text-align: center;
+  margin: 20px;
+}
