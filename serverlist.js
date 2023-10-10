@@ -67,7 +67,7 @@ export const ServerList = ({
     button({
       className: "arrow",
       text: "►",
-      disabled: (page + 1)* pageSize > list.length,
+      disabled: (page + 1) * pageSize > list.length,
       onClick: () => setState({ page: page + 1, pageSize, list }),
     }),
   ]);
@@ -93,10 +93,10 @@ const ServerPreview = ({ name, userName, remove }) => {
   });
   return div({ className: "serverPreview" }, [
     div({ className: "header" }, [
-      span({text:name}),
-      div({className:'right'}, [
-      button({class: 'icon', text: "★", onClick: remove}) 
-      ])
+      span({ text: name }),
+      div({ className: "right" }, [
+        button({ class: "icon", text: "★", onClick: remove }),
+      ]),
     ]),
     container,
   ]);
@@ -104,47 +104,52 @@ const ServerPreview = ({ name, userName, remove }) => {
 
 const Post = ({ post, userName, name }) => {
   const serverHref = `https://${userName.server}/`;
-  const userHref = userName.server ? (`${serverHref}@${post.account.username}${
-    userName.server !== name ? "@" + name : ""
-  }`) : post.account.url;
+  const userHref = userName.server
+    ? `${serverHref}@${post.account.username}${
+        userName.server !== name ? "@" + name : ""
+      }`
+    : post.account.url;
 
-  const postHref = userName.server ? `${serverHref}authorize_interaction?uri=${post.url}` : post.url;
+  const postHref = userName.server
+    ? `${serverHref}authorize_interaction?uri=${post.url}`
+    : post.url;
   const content = document.createElement("div");
   content.innerHTML = post.content;
 
   https: return div({ className: "post" }, [
-    img({src: post.account.avatar, className:"avatar" }),
+    img({ src: post.account.avatar, className: "avatar" }),
     a({
       href: userHref,
       text: post.account.display_name,
       target: "_blank",
-      className:"userName"
+      className: "userName",
     }),
     content,
     a({
       text: `⤺${post.replies_count} ★${post.favourites_count} ⇅${post.reblogs_count}`,
       href: `${postHref}`,
       target: "_blank",
-      className:"postInfo"
+      className: "postInfo",
     }),
   ]);
 };
 
 const AddServerWindow = (addServer) => {
-  const field = input({ placeholder: "Type the server URL", style: 'min-width: calc(100% - 82px)' });
+  const field = input({
+    placeholder: "Type the server URL",
+    style: "min-width: calc(100% - 82px)",
+  });
   return div({ className: "serverPreview" }, [
-
-    div({ className: "header" }, [
-      span({text:'Add new instance'}),
+    div({ className: "header" }, [span({ text: "Add new instance" })]),
+    form({ className: "serverPosts" }, [
+      field,
+      input({
+        class: "button",
+        type: "submit",
+        value: "Add",
+        onClick: () =>
+          addServer(field.value.replace("https://", "").replace("/", "")),
+      }),
     ]),
-    form({ className:'serverPosts'}, [
-    field,
-    input({
-      class: "button",
-      type: "submit",
-      value: "Add",
-      onClick: () =>
-        addServer(field.value.replace("https://", "").replace("/", "")),
-    }),])
   ]);
 };
