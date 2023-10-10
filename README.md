@@ -1,0 +1,2 @@
+# fediscope
+Fediverse post aggregator
