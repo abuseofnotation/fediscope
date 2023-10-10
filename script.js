@@ -49,7 +49,17 @@ const Servers = ({ userName, state, setState }) => {
       setState: (favourites) => setState({ favourites }),
       userName,
     }),
-    div({ className: "footer" }, []),
+    div({ className: "footer" }, [
+
+
+      a({href: 'https://abuseofnotation.github.io/', target: '_blank', text: 'Author page'}),
+
+      a({href: 'https://github.com/abuseofnotation/fediscope/', target: '_blank', text: 'Project Github'}),
+
+      a({href: 'https://ko-fi.com/abuseofnotation', target: '_blank', text: 'Support in Ko-fi'}),
+
+      a({href: 'https://patreon.com/borismarinov', target: '_blank', text: 'Support in Patreon'}),
+    ]),
   ]);
 };
 

@@ -67,7 +67,10 @@ a:visited {
 }
 
 .footer {
-  background-color:#ccc;
+}
+.footer a {
+  margin: 15px;
+  font-size: small;
 }
 
 .arrow {
