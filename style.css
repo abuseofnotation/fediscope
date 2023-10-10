@@ -1,6 +1,16 @@
 
 body {
   margin: 0;
+  font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+  font-weight: normal;
+  background-color: #282c37;
+  color: white;
+}
+a {
+  color: #8c8dff;
+}
+a:visited {
+  color: #8c8dff;
 }
 .container {
   margin: 0;
@@ -10,7 +20,28 @@ body {
   height: 100vh;
 }
 .header {
-  background-color:#ccc;
+  font-weight: bold;
+  font-size: small;
+  background-color: rgb(122, 122, 122);
+  position: relative;
+  padding: 4px;
+  border-bottom: 1px solid #b2b2b2;
+  text-align: center;
+}
+.mainHeader{
+  text-align: center;
+  font-weight: bold;
+  border-bottom: 1px solid #b2b2b2;
+  padding: 4px;
+  background-color: rgb(122, 122, 122);
+}
+.right {
+  position: absolute;
+  right:0px;
+  top: 0px;
+}
+.appName {
+  font-size: 20px;
 }
 .serverList{
   flex: 1;
@@ -25,15 +56,81 @@ body {
   position:relative;
   display: flex;
   flex-direction: column;
+  border: 1px solid #494949;
 }
 .serverHeader{
   width: 100%;
 }
 .serverPosts {
   overflow: auto;
+  padding: 5px;
 }
 
 .footer {
   background-color:#ccc;
 }
 
+.arrow {
+  padding: 5px;
+  color: white;
+  cursor: pointer;
+  background-color: #636363;
+  border:0;
+}
+.post {
+  padding: 20px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.icon {
+  cursor: pointer;
+  background-color: rgba(51, 51, 51, 0.05);
+  margin: 1px;
+  color: white;
+  border-width: 0;
+}
+
+.button {
+  border-radius: 4px;
+  border-width: 0;
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  margin: 0 2px;
+  padding: 10px 12px;
+  text-align: center;
+  transition: all 200ms;
+  vertical-align: baseline;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  min-width:30px
+}
+input {
+  padding: 10px 12px;
+  min-width:250px
+}
+.overlay {
+  width: 500px;
+  margin: 0 auto;
+  margin-top:30%;
+}
+.userName, userName:visited {
+  font-size: large;
+  color: white !important;
+  text-decoration: none;
+}
+
+
+.postInfo, postInfo:visited {
+  text-decoration: none;
+  color: white !important;
+}
+.avatar {
+  width: 22px;
+  margin: 0px 2px -4px 0px;
+}

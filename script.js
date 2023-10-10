@@ -1,8 +1,8 @@
-import { get, div, button, input, renderComponent, a } from "./helpers.js";
+import { form, span, get, div, button, input, renderComponent, a } from "./helpers.js";
 import { ServerList } from "./serverlist.js";
 
 const App = ({ state, setState }) => {
-  const userName = state.userName || { error: "Please enter a username" };
+  const userName = state.userName || { error: "Please enter your Mastodon username, in the format @<username>@<server>" };
   if (userName.error === undefined) {
     return Servers({ userName, state, setState });
   } else {
@@ -18,15 +18,19 @@ const App = ({ state, setState }) => {
 };
 
 const Servers = ({ userName, state, setState }) => {
-  console.log("Rendering server list", state);
   return div({ className: "container" }, [
     div({ className: "header" }, [
-      div({ text: `Hello ${userName.handle}` }),
+
+      div({className: 'appName', text:'fediscope'} ),
+      div({className:'right'}, [
+      span({ text: `${userName.handle ? userName.handle : 'No account'}` }),
       button({
-        text: "Quit",
+        class:'icon',
+        text: "¬",
         onClick: () =>
           setState({ userName: localStorage.removeItem("userName") }),
       }),
+      ])
     ]),
 
     ServerList({
@@ -57,11 +61,13 @@ const LoginForm = ({ name, setName }) => {
       return { handle, server };
     }
   };
-  const field = input({ placeholder: "Write your server" });
-  return div({}, [
+  const field = input({ placeholder: "@john_mastodon@mastodon.antisocial", autoFocus: true });
+  return form({class:'overlay'}, [
     div({ text: name.error }),
     field,
-    button({ text: "Go", onClick: () => setName(parseName(field.value)) }),
+    input({ value: "Go", type: "submit", className: "button", onClick: () => setName(parseName(field.value)) }),
+    button({text:"Skip", className:"button", onClick: () => setName({server: undefined, handle: undefined})})
+
   ]);
 };
 

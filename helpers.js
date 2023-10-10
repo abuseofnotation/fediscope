@@ -1,7 +1,7 @@
 const development = window.location.hostname === "localhost";
 export const createElement =
   (type) =>
-  ({ className, text, onClick, ...props }, children) => {
+  ({ className, text, onClick, disabled, ...props }, children) => {
     const div = document.createElement(type);
     if (className) {
       div.classList.add(className);
@@ -15,6 +15,9 @@ export const createElement =
     }
     if (onClick) {
       div.addEventListener("click", onClick);
+    }
+    if (disabled) {
+      div.setAttribute("disabled", true);
     }
     Object.keys(props).forEach((propName) => {
       div.setAttribute(propName, props[propName]);
@@ -31,6 +34,8 @@ export const button = createElement("button");
 export const span = createElement("span");
 export const input = createElement("input");
 export const a = createElement("a");
+export const form = createElement("form");
+export const img = createElement("img");
 
 const appName = "fediScope";
 
