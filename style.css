@@ -1,0 +1,39 @@
+
+body {
+  margin: 0;
+}
+.container {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.header {
+  background-color:#ccc;
+}
+.serverList{
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.serverPreview {
+  width: 100%;
+  overflow: auto;
+  position:relative;
+  display: flex;
+  flex-direction: column;
+}
+.serverHeader{
+  width: 100%;
+}
+.serverPosts {
+  overflow: auto;
+}
+
+.footer {
+  background-color:#ccc;
+}
+
