@@ -1,10 +1,10 @@
 import {
-  form,
   get,
+  renderPromise,
+  form,
   div,
   button,
   input,
-  renderComponent,
   a,
   img,
   span,
@@ -21,97 +21,116 @@ assertEqual(trimList(1, 2, list), [3, 4]);
 
 export const ServerList = ({
   userName,
-  state: { page = 0, pageSize = 3, list = [userName.server] },
+  state: { page = 0, pageSize = 3, favourites = [] },
   setState,
+  list,
 }) => {
+  const renderServerPreview = ({ domain }) =>
+    ServerPreview({
+      domain,
+      userName,
+      isFavourite:
+        favourites.find((theDomain) => domain === theDomain) !== undefined,
+      add: () =>
+        setState({
+          page,
+          pageSize,
+          favourites: (favourites || []).concat([domain]),
+        }),
+      remove: () =>
+        setState({
+          page,
+          pageSize,
+          favourites: (favourites || []).filter(
+            (theDomain) => domain !== theDomain,
+          ),
+        }),
+    });
+
+  // A list of the servers that we are supposed to show in the current page
+  const currentPageServers = trimList(page, pageSize, list).map(
+    renderServerPreview,
+  );
+
+  const additionalWidgets = [
+    // Add a window for managing servers
+    AddServerWindow((domain) =>
+      setState({
+        page,
+        pageSize,
+        favourites: (favourites || []).concat([name]),
+      }),
+    ),
+    // Add a few empty windows, for layout purposes
+    div({ className: "serverPreview" }),
+    div({ className: "serverPreview" }),
+    div({ className: "serverPreview" }),
+  ];
+
+  const currentPageServersAndWidgets = currentPageServers
+    .concat(additionalWidgets)
+    .slice(0, pageSize);
+
   return div({ className: "serverList" }, [
     button({
       className: "arrow",
       text: "◄",
       disabled: page === 0,
-      onClick: () => setState({ page: page - 1, pageSize, list }),
+      onClick: () => setState({ page: page - 1, pageSize, favourites }),
     }),
-    ...trimList(
-      page,
-      pageSize,
-      list
-        .map((name) =>
-          ServerPreview({
-            name,
-            userName,
-            remove: () =>
-              setState({
-                page,
-                pageSize,
-                list: list.filter((serverName) => serverName !== name),
-              }),
-          }),
-        )
-        // Add a window for managing servers
-        .concat(
-          AddServerWindow((name) =>
-            setState({
-              page,
-              pageSize,
-              list: (list || []).concat([name]),
-            }),
-          ),
-        )
-        // Add a few empty windows, for layout purposes
-        .concat([
-          div({ className: "serverPreview" }),
-          div({ className: "serverPreview" }),
-          div({ className: "serverPreview" }),
-        ]),
-    ),
+    ...currentPageServersAndWidgets,
+
     button({
       className: "arrow",
       text: "►",
       disabled: (page + 1) * pageSize > list.length,
-      onClick: () => setState({ page: page + 1, pageSize, list }),
+      onClick: () => setState({ page: page + 1, pageSize, favourites }),
     }),
   ]);
 };
 
-const ServerPreview = ({ name, userName, remove }) => {
+const ServerPreview = ({ domain, userName, remove, add, isFavourite }) => {
   const container = div({ className: "serverPosts" }, [
     div({ className: "loading", text: "Loading" }),
   ]);
 
-  get(
-    "https://" +
-      name +
-      "/api/v1/timelines/public?local=true&only_media=false&limit=40",
-    //  '/api/v1/trends/statuses?&limit=40'
-  ).then((result) => {
-    const resultSorted = result.sort(
-      (a, b) => b.reblogs_count - a.reblogs_count,
-    );
-    container.replaceChildren(
-      ...resultSorted.map((post) => Post({ post, userName, name })),
-    );
-  })
-  .catch((error) => {
-    console.log(error)
-    container.replaceChildren(div({text:error}))
-  });
-
   return div({ className: "serverPreview" }, [
     div({ className: "header" }, [
-      span({ text: name }),
+      span({ text: domain }),
       div({ className: "right" }, [
-        button({ class: "icon", text: "★", onClick: remove }),
+        isFavourite
+          ? button({ class: "icon", text: "★", onClick: remove })
+          : button({ class: "icon", text: "☆", onClick: add }),
       ]),
     ]),
-    container,
+    div({ className: "serverPosts" }, [
+      renderPromise(
+        get(
+          "https://" +
+            domain +
+            "/api/v1/timelines/public?local=true&only_media=false&limit=40",
+          //  '/api/v1/trends/statuses?&limit=40'
+        )
+          .then((result) => {
+            const resultSorted = result.sort(
+              (a, b) => b.reblogs_count - a.reblogs_count,
+            );
+            return resultSorted.map((post) => Post({ post, userName, domain }));
+          })
+          .catch((error) => {
+            console.log(error);
+            return div({ text: error });
+          }),
+      ),
+    ]),
   ]);
 };
 
-const Post = ({ post, userName, name }) => {
+const Post = ({ post, userName, domain }) => {
   const serverHref = `https://${userName.server}/`;
   const userHref = userName.server
     ? `${serverHref}@${post.account.username}${
-        userName.server !== name ? "@" + name : ""
+        userName.server !== domain ? "@" + domain : ""
       }`
     : post.account.url;
 

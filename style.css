@@ -40,9 +40,18 @@ a:visited {
   right:0px;
   top: 0px;
 }
-.appName {
+
+.menu a, .menu a:visited {
   font-size: 20px;
+  text-decoration: none;
+  color: white !important;
+  cursor: pointer;
+  margin: 10px;
 }
+.menu .selected {
+  border-bottom: 1px solid white;
+}
+
 .serverList{
   flex: 1;
   overflow: auto;

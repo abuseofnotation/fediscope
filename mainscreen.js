@@ -1,0 +1,72 @@
+import { form, span, get, div, button, input, a } from "./helpers.js";
+
+import { Favourites } from "./favourites.js";
+import { Popular } from "./popular.js";
+
+const menuItems = ["Popular", "Favourites"];
+
+export const MainScreen = ({ userName, state, setState }) => {
+  return div({ className: "container" }, [
+    div({ className: "header" }, [
+      div(
+        { className: "menu" },
+        menuItems.map((name, i) =>
+          a({
+            text: name,
+            className: (state.page || 0) === i ? "selected" : "",
+            onClick: () => {
+              setState({ page: i, favourites: {...state.favourites, page: 0}});
+            },
+          }),
+        ),
+      ),
+
+      div({ className: "right" }, [
+        span({ text: `${userName.handle ? userName.handle : "No account"}` }),
+        button({
+          class: "icon",
+          text: "¬",
+          onClick: () => setState({ userName: undefined }),
+        }),
+      ]),
+    ]),
+
+    state.page === 1
+      ? Favourites({
+          state: state.favourites || {},
+          setState: (favourites) => setState({ favourites }),
+          userName,
+        })
+      : Popular({
+          state: state.favourites || {},
+          setState: (favourites) => setState({ favourites }),
+          userName,
+        }),
+
+    div({ className: "footer" }, [
+      a({
+        href: "https://abuseofnotation.github.io/",
+        target: "_blank",
+        text: "Author page",
+      }),
+
+      a({
+        href: "https://github.com/abuseofnotation/fediscope/",
+        target: "_blank",
+        text: "Project Github",
+      }),
+
+      a({
+        href: "https://ko-fi.com/abuseofnotation",
+        target: "_blank",
+        text: "Support in Ko-fi",
+      }),
+
+      a({
+        href: "https://patreon.com/borismarinov",
+        target: "_blank",
+        text: "Support in Patreon",
+      }),
+    ]),
+  ]);
+};

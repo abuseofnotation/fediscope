@@ -70,6 +70,18 @@ export const get = (url) =>
       throw error;
     });
 
+export const renderPromise = (p) => {
+  const loader = div({ className: "loading", text: "Loading" });
+  p.then((newDiv) => {
+    if (newDiv.length) {
+      loader.parentElement.replaceChildren(...newDiv);
+    } else {
+      loader.parentElement.replaceChildren(newDiv);
+    }
+  });
+  return loader;
+};
+
 export const assertEqual = (a, b) => {
   if (development) {
     if (JSON.stringify(a) !== JSON.stringify(b)) {
