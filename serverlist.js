@@ -58,7 +58,7 @@ export const ServerList = ({
       setState({
         page,
         pageSize,
-        favourites: (favourites || []).concat([name]),
+        favourites: (favourites || []).concat([domain]),
       }),
     ),
     // Add a few empty windows, for layout purposes
