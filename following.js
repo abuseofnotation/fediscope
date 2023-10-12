@@ -39,7 +39,13 @@ const sampleOutput = [
   { domain: "mastodon.xyz", followers: ["ivan"] },
 ];
 
-assertEqual(serverList(sampleList).map(({domain, followers}) => ({domain, followers})), sampleOutput);
+assertEqual(
+  serverList(sampleList).map(({ domain, followers }) => ({
+    domain,
+    followers,
+  })),
+  sampleOutput,
+);
 
 export const Following = ({ state, setState, userName }) => {
   const showFollowerServers = (info) =>
@@ -51,10 +57,15 @@ export const Following = ({ state, setState, userName }) => {
         list: serverList(followers),
       }),
     );
-
-  return div({ className: "serverList" }, [
-    renderPromise(
-      getUserInfo(userName).then((info) => showFollowerServers(info)),
-    ),
-  ]);
+  if (userName.server !== undefined) {
+    return div({ className: "serverList" }, [
+      renderPromise(
+        getUserInfo(userName).then((info) => showFollowerServers(info)),
+      ),
+    ]);
+  } else {
+    return div({ className: "serverList" }, [
+      div({ className: "loading", text: "Add your user name to see this" }),
+    ]);
+  }
 };

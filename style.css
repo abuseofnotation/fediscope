@@ -80,6 +80,7 @@ a:visited {
   display: flex;
   flex-direction: column;
   border: 1px solid #494949;
+  position: relative;
 }
 .serverHeader{
   width: 100%;
@@ -162,5 +163,7 @@ input {
 }
 .loading {
   text-align: center;
-  margin: 20px;
+  width: 100%;
+  margin-top: 30%;
+  font-size: larger
 }

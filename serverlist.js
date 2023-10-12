@@ -96,14 +96,19 @@ const ServerPreview = ({ info, userName, remove, add, isFavourite }) => {
 
   return div({ className: "serverPreview" }, [
     div({ className: "header" }, [
-      span({ text: info.domain, title: info.domain}),
+      span({ text: info.domain, title: info.domain }),
       div({ className: "right" }, [
         isFavourite
           ? button({ class: "icon", text: "★", onClick: remove })
           : button({ class: "icon", text: "☆", onClick: add }),
       ]),
     ]),
-    (info.description && div({ className: "description", text: info.description, title: info.description})),
+    info.description &&
+      div({
+        className: "description",
+        text: info.description,
+        title: info.description,
+      }),
     div({ className: "serverPosts" }, [
       renderPromise(
         get(
@@ -124,8 +129,7 @@ const ServerPreview = ({ info, userName, remove, add, isFavourite }) => {
             );
           })
           .catch((error) => {
-            console.log(error);
-            return div({ text: error });
+            return div({ className:'loading', text: error });
           }),
       ),
     ]),
