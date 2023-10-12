@@ -8,21 +8,20 @@ import {
   input,
   a,
 } from "./helpers.js";
+import { getServers } from "./model.js";
 import { ServerList } from "./serverlist.js";
 
 export const Popular = ({ state, setState, userName }) => {
   return div({ className: "serverList" }, [
     renderPromise(
-      get(
-        "https://api.joinmastodon.org/servers?language=en&category=general&region=&ownership=&registrations=",
-      ).then((list) => {
-        return ServerList({
+      getServers().then((list) =>
+        ServerList({
           state: state || {},
           setState: (favourites) => setState(favourites),
           userName,
           list,
-        });
-      }),
+        }),
+      ),
     ),
   ]);
 };

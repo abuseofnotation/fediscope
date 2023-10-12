@@ -1,9 +1,12 @@
 import { form, span, get, div, button, input, a } from "./helpers.js";
 
 import { Favourites } from "./favourites.js";
+import { Following } from "./following.js";
 import { Popular } from "./popular.js";
 
-const menuItems = ["Popular", "Favourites"];
+const menuItems = ["Popular", "Following", "Favourites"];
+
+const items = [Popular, Following, Favourites];
 
 export const MainScreen = ({ userName, state, setState }) => {
   return div({ className: "container" }, [
@@ -15,7 +18,10 @@ export const MainScreen = ({ userName, state, setState }) => {
             text: name,
             className: (state.page || 0) === i ? "selected" : "",
             onClick: () => {
-              setState({ page: i, favourites: {...state.favourites, page: 0}});
+              setState({
+                page: i,
+                favourites: { ...state.favourites, page: 0 },
+              });
             },
           }),
         ),
@@ -30,18 +36,32 @@ export const MainScreen = ({ userName, state, setState }) => {
         }),
       ]),
     ]),
+    items[state.page || 0]({
+      state: state.favourites || {},
+      setState: (favourites) => setState({ favourites }),
+      userName,
+    }),
+    /*
+    [
+      () => Popular({
+        state: state.favourites || {},
+        setState: (favourites) => setState({ favourites }),
+        userName,
+      }),
 
-    state.page === 1
-      ? Favourites({
-          state: state.favourites || {},
-          setState: (favourites) => setState({ favourites }),
-          userName,
-        })
-      : Popular({
-          state: state.favourites || {},
-          setState: (favourites) => setState({ favourites }),
-          userName,
-        }),
+      Following({
+        state: state.favourites || {},
+        setState: (favourites) => setState({ favourites }),
+        userName,
+      }),
+
+      Favourites({
+        state: state.favourites || {},
+        setState: (favourites) => setState({ favourites }),
+        userName,
+      }),
+    ][state.page || 0],
+    */
 
     div({ className: "footer" }, [
       a({

@@ -115,7 +115,10 @@ const ServerPreview = ({ domain, userName, remove, add, isFavourite }) => {
             const resultSorted = result.sort(
               (a, b) => b.reblogs_count - a.reblogs_count,
             );
-            return resultSorted.map((post) => Post({ post, userName, domain }));
+            return div(
+              {},
+              resultSorted.map((post) => Post({ post, userName, domain })),
+            );
           })
           .catch((error) => {
             console.log(error);

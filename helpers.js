@@ -70,17 +70,26 @@ export const get = (url) =>
       throw error;
     });
 
-export const renderPromise = (p) => {
+export const renderPromise = (promise) => {
   const loader = div({ className: "loading", text: "Loading" });
-  p.then((newDiv) => {
-    if (newDiv.length) {
-      loader.parentElement.replaceChildren(...newDiv);
-    } else {
-      loader.parentElement.replaceChildren(newDiv);
-    }
+  promise.then((newDiv) => {
+    loader.parentElement.replaceChildren(newDiv);
   });
   return loader;
 };
+
+const cache = {}
+
+export const cachedGet = (url) => {
+  if (cache[url]) {
+    return cache[url]
+  } else {
+    const result = get(url)
+    cache[url] = result
+    return result
+  }
+}
+
 
 export const assertEqual = (a, b) => {
   if (development) {
