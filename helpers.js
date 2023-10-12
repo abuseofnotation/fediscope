@@ -11,7 +11,7 @@ export const createElement =
       div.appendChild(textNode);
     }
     if (children) {
-      div.replaceChildren(...children);
+      div.replaceChildren(...children.filter((c) => c !== undefined));
     }
     if (onClick) {
       div.addEventListener("click", onClick);

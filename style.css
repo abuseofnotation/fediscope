@@ -27,7 +27,21 @@ a:visited {
   padding: 4px;
   border-bottom: 1px solid #b2b2b2;
   text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
+
+.description {
+  font-weight: bold;
+  font-size: 10px;
+  background-color: rgb(85, 85, 85);
+  position: relative;
+  padding: 4px;
+  border-bottom: 1px solid #b2b2b2;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .mainHeader{
   text-align: center;
   font-weight: bold;

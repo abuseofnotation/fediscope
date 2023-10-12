@@ -25,24 +25,24 @@ export const ServerList = ({
   setState,
   list,
 }) => {
-  const renderServerPreview = ({ domain }) =>
+  const renderServerPreview = (info) =>
     ServerPreview({
-      domain,
+      info,
       userName,
       isFavourite:
-        favourites.find((theDomain) => domain === theDomain) !== undefined,
+        favourites.find((domain) => info.domain === domain) !== undefined,
       add: () =>
         setState({
           page,
           pageSize,
-          favourites: (favourites || []).concat([domain]),
+          favourites: (favourites || []).concat([info.domain]),
         }),
       remove: () =>
         setState({
           page,
           pageSize,
           favourites: (favourites || []).filter(
-            (theDomain) => domain !== theDomain,
+            (domain) => info.domain !== domain,
           ),
         }),
     });
@@ -89,25 +89,26 @@ export const ServerList = ({
   ]);
 };
 
-const ServerPreview = ({ domain, userName, remove, add, isFavourite }) => {
+const ServerPreview = ({ info, userName, remove, add, isFavourite }) => {
   const container = div({ className: "serverPosts" }, [
     div({ className: "loading", text: "Loading" }),
   ]);
 
   return div({ className: "serverPreview" }, [
     div({ className: "header" }, [
-      span({ text: domain }),
+      span({ text: info.domain, title: info.domain}),
       div({ className: "right" }, [
         isFavourite
           ? button({ class: "icon", text: "★", onClick: remove })
           : button({ class: "icon", text: "☆", onClick: add }),
       ]),
     ]),
+    (info.description && div({ className: "description", text: info.description, title: info.description})),
     div({ className: "serverPosts" }, [
       renderPromise(
         get(
           "https://" +
-            domain +
+            info.domain +
             "/api/v1/timelines/public?local=true&only_media=false&limit=40",
           //  '/api/v1/trends/statuses?&limit=40'
         )
@@ -117,7 +118,9 @@ const ServerPreview = ({ domain, userName, remove, add, isFavourite }) => {
             );
             return div(
               {},
-              resultSorted.map((post) => Post({ post, userName, domain })),
+              resultSorted.map((post) =>
+                Post({ post, userName, domain: info.domain }),
+              ),
             );
           })
           .catch((error) => {

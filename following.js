@@ -18,11 +18,14 @@ const serverList = (followers) => {
     dict[domain] = dict[domain] ? dict[domain].concat([user]) : [user];
     return dict;
   }, {});
-  delete dict.undefined
-  return Object.keys(dict).map((domain) => ({
-    domain,
-    followers: dict[domain],
-  }));
+  delete dict.undefined;
+  return Object.keys(dict)
+    .map((domain) => ({
+      domain,
+      followers: dict[domain],
+      description: "With " + dict[domain].join(", "),
+    }))
+    .sort((a, b) => b.followers.length - a.followers.length);
 };
 
 const sampleList = [
@@ -36,7 +39,7 @@ const sampleOutput = [
   { domain: "mastodon.xyz", followers: ["ivan"] },
 ];
 
-assertEqual(serverList(sampleList), sampleOutput);
+assertEqual(serverList(sampleList).map(({domain, followers}) => ({domain, followers})), sampleOutput);
 
 export const Following = ({ state, setState, userName }) => {
   const showFollowerServers = (info) =>
