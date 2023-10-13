@@ -14,3 +14,6 @@ Here is what the tabs contain:
 
 Visit at
 [abuseofnotation.github.io/fediscope/](https://abuseofnotation.github.io/fediscope/)
+
+
+If you want some feature, create an issue.
