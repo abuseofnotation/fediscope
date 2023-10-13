@@ -3,6 +3,7 @@ import { form, span, get, div, button, input, a } from "./helpers.js";
 import { Favourites } from "./favourites.js";
 import { Following } from "./following.js";
 import { Popular } from "./popular.js";
+import { VolumeControl } from "./components/volumecontrol.js";
 
 const menuItems = ["Popular", "Following", "Favourites"];
 
@@ -62,9 +63,18 @@ export const MainScreen = ({ userName, state, setState }) => {
       }),
     ][state.page || 0],
     */
+    div({ className: "footer" }, [
+      span({text:'Display'}),
+      VolumeControl({
+        volume: state.favourites.pageSize,
+        setVolume: (pageSize) =>
+          setState({ favourites: { ...state.favourites, pageSize } }),
+      }),
+
+      span({text:'instances per screen.'})
+    ]),
 
     div({ className: "footer" }, [
-
       a({
         href: "https://github.com/abuseofnotation/fediscope/",
         target: "_blank",

@@ -89,13 +89,16 @@ a:visited {
   overflow: auto;
   padding: 5px;
 }
-
 .footer {
-}
-.footer a {
-  margin: 15px;
+  margin: 5px;
   font-size: small;
 }
+
+.footer span, .footer a{
+  margin: 2px;
+}
+
+
 
 .arrow {
   padding: 5px;
@@ -166,4 +169,13 @@ input {
   width: 100%;
   margin-top: 30%;
   font-size: larger
+}
+.postTags {
+  border-bottom: 1px solid #b2b2b2;
+}
+.tag {
+  padding: 1px;
+  color: white;
+  display: inline-block;
+  font-size: 10px;
 }
