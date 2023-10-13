@@ -64,18 +64,18 @@ export const MainScreen = ({ userName, state, setState }) => {
     */
 
     div({ className: "footer" }, [
+
+      a({
+        href: "https://github.com/abuseofnotation/fediscope/",
+        target: "_blank",
+        text: "README / Project Github",
+      }),
+
       a({
         href: "https://abuseofnotation.github.io/",
         target: "_blank",
         text: "Author page",
       }),
-
-      a({
-        href: "https://github.com/abuseofnotation/fediscope/",
-        target: "_blank",
-        text: "Project Github",
-      }),
-
       a({
         href: "https://ko-fi.com/abuseofnotation",
         target: "_blank",
