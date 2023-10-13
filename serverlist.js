@@ -11,7 +11,7 @@ import {
   assertEqual,
 } from "./helpers.js";
 
-import { ServerPreview} from './serverpreview.js'
+import { ServerPreview } from "./serverpreview.js";
 
 // Show only the portion of the list that corresponds to current page and pageSize
 const trimList = (page, pageSize, list) =>
@@ -73,25 +73,31 @@ export const ServerList = ({
     .concat(additionalWidgets)
     .slice(0, pageSize);
 
-  return div({ className: "serverList" }, [
+  const prevPage = () => setState({ page: page - 1, pageSize, favourites });
+
+  const nextPage = () => setState({ page: page + 1, pageSize, favourites });
+
+
+  const element = div({ className: "serverList", autofocus: true, tabindex: "0"}, [
     button({
+      id:"left-arrow",
       className: "arrow",
       text: "◄",
       disabled: page === 0,
-      onClick: () => setState({ page: page - 1, pageSize, favourites }),
+      onClick: prevPage,
     }),
     ...currentPageServersAndWidgets,
 
     button({
+      id:"right-arrow",
       className: "arrow",
       text: "►",
       disabled: (page + 1) * pageSize > list.length,
-      onClick: () => setState({ page: page + 1, pageSize, favourites }),
+      onClick: nextPage,
     }),
   ]);
+  return element;
 };
-
-
 
 const AddServerWindow = (addServer) => {
   const field = input({

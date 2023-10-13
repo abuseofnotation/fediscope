@@ -32,3 +32,16 @@ const App = ({ state, setState }) => {
 };
 
 window.onload = renderComponent(App);
+
+
+
+  document.addEventListener("keydown", function (event) {
+    console.log(event)
+    if (event.keyCode === 37 || event.key === "ArrowLeft") {
+      document.getElementById('left-arrow').click()
+    }
+    // Check if the pressed key is the right arrow key
+    else if (event.keyCode === 39 || event.key === "ArrowRight") {
+      document.getElementById('right-arrow').click()
+    }
+  });
