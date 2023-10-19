@@ -1,4 +1,13 @@
-import { form, span, get, div, button, input, a } from "./helpers.js";
+import {
+  form,
+  span,
+  get,
+  div,
+  button,
+  input,
+  a,
+  assertEqual,
+} from "./helpers.js";
 
 import { Favourites } from "./favourites.js";
 import { Following } from "./following.js";
@@ -8,6 +17,15 @@ import { VolumeControl } from "./components/volumecontrol.js";
 const menuItems = ["Popular", "Following", "Favourites"];
 
 const items = [Popular, Following, Favourites];
+
+const computePage = ({ page, pageSize }, newPageSize) => {
+  const item = page * pageSize;
+  return Math.floor(item / newPageSize);
+};
+
+assertEqual(computePage({ page: 0, pageSize: 1 }, 2), 0);
+assertEqual(computePage({ page: 1, pageSize: 1 }, 2), 0);
+assertEqual(computePage({ page: 2, pageSize: 1 }, 2), 1);
 
 export const MainScreen = ({ userName, state, setState }) => {
   return div({ className: "container" }, [
@@ -64,14 +82,20 @@ export const MainScreen = ({ userName, state, setState }) => {
     ][state.page || 0],
     */
     div({ className: "footer" }, [
-      span({text:'Display'}),
+      span({ text: "Display" }),
       VolumeControl({
         volume: state.favourites.pageSize,
         setVolume: (pageSize) =>
-          setState({ favourites: { ...state.favourites, pageSize } }),
+          setState({
+            favourites: {
+              ...state.favourites,
+              pageSize,
+              page: computePage(state.favourites, pageSize),
+            },
+          }),
       }),
 
-      span({text:'instances per screen.'})
+      span({ text: "instances per screen." }),
     ]),
 
     div({ className: "footer" }, [

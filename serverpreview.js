@@ -7,6 +7,8 @@ import {
   input,
   a,
   img,
+  video,
+  source,
   span,
   assertEqual,
 } from "./helpers.js";
@@ -80,6 +82,7 @@ export const ServerPreview = ({ info, userName, remove, add, isFavourite }) => {
 
 const Post = ({ post, userName, domain }) => {
   const serverHref = `https://${userName.server}/`;
+
   const userHref = userName.server
     ? `${serverHref}@${post.account.username}${
         userName.server !== domain ? "@" + domain : ""
@@ -101,6 +104,16 @@ const Post = ({ post, userName, domain }) => {
       className: "userName",
     }),
     content,
+    ...post.media_attachments.map(({ url, type }) => {
+      if (type === "image") {
+        return img({ class: "postImage", src: url });
+      } else if (type === "video") {
+        console.log('video', url)
+        return video({ class: "postImage", controls: true }, [
+          source({src: url})
+        ]);
+      }
+    }),
     a({
       text: `⤺${post.replies_count} ★${post.favourites_count} ⇅${post.reblogs_count}`,
       href: `${postHref}`,

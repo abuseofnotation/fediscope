@@ -36,6 +36,8 @@ export const input = createElement("input");
 export const a = createElement("a");
 export const form = createElement("form");
 export const img = createElement("img");
+export const video = createElement("video");
+export const source = createElement("source");
 
 const appName = "fediScope";
 
