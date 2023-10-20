@@ -84,7 +84,7 @@ export const MainScreen = ({ userName, state, setState }) => {
     div({ className: "footer" }, [
       span({ text: "Display" }),
       VolumeControl({
-        volume: state.favourites.pageSize,
+        volume: state?.favourites?.pageSize || 3,
         setVolume: (pageSize) =>
           setState({
             favourites: {
