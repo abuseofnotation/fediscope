@@ -1,6 +1,4 @@
 
-
-
 h1, h2, h3, h4, h5, h6 {
   font-family: 'mell_ultra';
   font-weight: bold;
@@ -76,6 +74,7 @@ a:visited {
   color: white !important;
   cursor: pointer;
   margin: 10px;
+  font-family:'mell_mono';
 }
 .menu .selected {
   border-bottom: 1px solid white;
@@ -168,6 +167,7 @@ input {
   font-size: large;
   color: white !important;
   text-decoration: none;
+  font-family:'mell_display';
 }
 
 
