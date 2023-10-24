@@ -9,8 +9,8 @@ You can put your Mastodon handle, including the server, and all the links to pos
 
 Here is what the tabs contain:
 * **Popular**: Content from popular Mastodon instances.
-* **Following**: See the instances of the people you are following (works only if you type your instance).
-* **Favorites**: You can pin some instances in this tab.
+* **Following**: See the instances of the people you are following (works only if you type out your username in the form - "@username@instance").
+* **Favorites**: You can pin some instances in this tab, by clicking the star icon, next to the instances' URL.
 
 Visit at
 [abuseofnotation.github.io/fediscope/](https://abuseofnotation.github.io/fediscope/)
