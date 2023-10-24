@@ -5,11 +5,13 @@ export const getUserInfo = (userName) =>
     `https://${userName.server}/api/v2/search?q=%40${userName.handle}@${userName.server}&limit=1&type=accounts`,
   ).then((result)=> result.accounts[0]);
 
+const serverUrl = ({url}) => url.split('@')[0]
+
 export const getUserFollowers = (userInfo) =>
-  cachedGet(`https://mathstodon.xyz/api/v1/accounts/${userInfo.id}/followers`);
+  cachedGet(`${serverUrl(userInfo)}api/v1/accounts/${userInfo.id}/followers`);
 
 export const getUserFollowing = (userInfo) =>
-  cachedGet(`https://mathstodon.xyz/api/v1/accounts/${userInfo.id}/following`);
+  cachedGet(`${serverUrl(userInfo)}api/v1/accounts/${userInfo.id}/following`);
 
 
 export const getServers = () => cachedGet(
