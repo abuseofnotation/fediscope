@@ -1,20 +1,20 @@
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'mell_ultra';
+  font-family: 'MellDisplay';
   font-weight: bold;
 }
 
 code {
-  font-family: 'mell_mono';
+  font-family: 'MellMono';
 }
 .highlight {
-  font-family: 'mell_mono';
+  font-family: 'MellMono';
 }
 
 
 body {
   margin: 0;
-  font-family: 'mell_regular', Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+  font-family: 'MellSans', Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
   font-weight: normal;
   background-color: #282c37;
   color: white;
@@ -74,7 +74,7 @@ a:visited {
   color: white !important;
   cursor: pointer;
   margin: 10px;
-  font-family:'mell_mono';
+  font-family:'MellMono';
 }
 .menu .selected {
   border-bottom: 1px solid white;
