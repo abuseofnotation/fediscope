@@ -57,7 +57,7 @@ export const ServerPreview = ({ info, userName, remove, add, isFavourite }) => {
           get(
             "https://" +
               info.domain +
-              "/api/v1/timelines/public?local=true&only_media=false&limit=40",
+              "/api/v1/timelines/public?local=true&only_media=false&limit=200",
             //  '/api/v1/trends/statuses?&limit=40'
           )
             .then((result) => {
